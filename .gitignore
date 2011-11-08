@@ -1,0 +1,5 @@
+.FlexUnitSettings
+bin-debug
+bin-release/data
+src/FlexUnitApplication.mxml
+src/FlexUnitCompilerApplication.mxml

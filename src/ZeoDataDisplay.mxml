@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     * Copyright (c) 2010 Daniel Rinehart <danielr@neophi.com> [http://danielr.neophi.com/]
+     *
+     * Permission is hereby granted, free of charge, to any person obtaining a copy
+     * of this software and associated documentation files (the "Software"), to deal
+     * in the Software without restriction, including without limitation the rights
+     * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+     * copies of the Software, and to permit persons to whom the Software is
+     * furnished to do so, subject to the following conditions:
+     *
+     * The above copyright notice and this permission notice shall be included in
+     * all copies or substantial portions of the Software.
+     *
+     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+     * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+     * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+     * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+     * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+     * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+     * THE SOFTWARE.
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:model="com.neophi.zeo.model.*"
+               xmlns:mx="library://ns.adobe.com/flex/mx"
+               xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:view="com.neophi.zeo.view.*"
+               creationComplete="aboutHelpModel.addContextMenuItems(this);">
+    <fx:Declarations>
+        <model:AboutHelpModel id="aboutHelpModel"/>
+        <model:ZeoDataLoaderModel id="zeoDataLoaderModel"/>
+        <model:ZQChartModel id="zqChartModel"
+                zeoDataEntries="{zeoDataLoaderModel.zeoDataEntries}"/>
+        <model:SleepCycleChartModel id="sleepCycleChartModel"
+                zeoDataEntries="{zeoDataLoaderModel.zeoDataEntries}"/>
+    </fx:Declarations>
+    <s:layout>
+        <s:VerticalLayout paddingBottom="10"
+                paddingLeft="10"
+                paddingRight="10"
+                paddingTop="10"/>
+    </s:layout>
+
+    <s:TabBar dataProvider="{views}"/>
+    <mx:ViewStack id="views"
+            width="100%"
+            height="100%">
+        <s:NavigatorContent label="Load Data">
+            <view:ZeoDataLoader zeoDataLoaderModel="{zeoDataLoaderModel}"/>
+        </s:NavigatorContent>
+        <s:NavigatorContent label="ZQ Chart">
+            <view:ZQChart width="100%"
+                    height="100%"
+                    zqChartModel="{zqChartModel}"/>
+        </s:NavigatorContent>
+        <s:NavigatorContent label="Sleep Cycle Chart">
+            <view:SleepCycleChart width="100%"
+                    height="100%"
+                    sleepCycleChartModel="{sleepCycleChartModel}"/>
+        </s:NavigatorContent>
+        <s:NavigatorContent label="About/Help">
+            <view:AboutHelp width="100%"
+                    height="100%"
+                    aboutHelpModel="{aboutHelpModel}"/>
+        </s:NavigatorContent>
+    </mx:ViewStack>
+</s:Application>
