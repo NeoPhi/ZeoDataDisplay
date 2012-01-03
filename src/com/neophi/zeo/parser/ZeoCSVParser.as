@@ -66,7 +66,7 @@ package com.neophi.zeo.parser
                 new ColumnHandler("Alarm Reason", "alarmReason", parseEnum, AlarmReason),
                 new ColumnHandler("Snooze Time", "snoozeTime", parseInteger, 0, 30),
                 new ColumnHandler("Wake Tone", "wakeTone", parseEnum, WakeTone),
-                new ColumnHandler("Wake Window", "wakeWindow", parseInteger, 15, 40, 5),
+                new ColumnHandler("Wake Window", "wakeWindow", parseInteger, 15, 40, 5, 0),
                 new ColumnHandler("Alarm Type", "alarmType", parseEnum, AlarmType),
                 new ColumnHandler("First Alarm Ring", "firstAlarmRing", parseDateTime),
                 new ColumnHandler("Last Alarm Ring", "lastAlarmRing", parseDateTime),
@@ -211,12 +211,19 @@ package com.neophi.zeo.parser
          * @param min Minimum value the integer may have
          * @param max Maximum value the integer may have
          * @param modulo Modulo the value must have
+         * @param optionalValues Other values that are acceptable, ignoring min, max, and modulo
          * @return Value
          */
-        private static function parseInteger(value:String, min:int = int.MIN_VALUE, max:int = int.MAX_VALUE, modulo:int = 1):Integer
+        private static function parseInteger(value:String, min:int = int.MIN_VALUE, max:int = int.MAX_VALUE, modulo:int = 1, ... optionalValues):Integer
         {
             var result:int = int(value);
 
+            for each (var optionalValue:int in optionalValues) {
+                if (optionalValue == result) {
+                    return new Integer(result);
+                }
+            }
+            
             if (result < min)
             {
                 throw new ArgumentError("Value \"" + value + "\" is less than \"" + min + "\".");

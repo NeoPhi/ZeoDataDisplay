@@ -49,6 +49,8 @@ package com.neophi.zeo.parser
 
         private static const COMPLEX_RECORD:String = "complex";
 
+        private static const MISSING_RECORDS:String = "missing";
+
         private static var _externalFilesLoader:ExternalFilesLoader;
 
         [BeforeClass(async)]
@@ -57,6 +59,7 @@ package com.neophi.zeo.parser
             _externalFilesLoader = new ExternalFilesLoader();
             _externalFilesLoader.addFileToLoad(ONE_RECORD, "data/OneRecord.csv");
             _externalFilesLoader.addFileToLoad(COMPLEX_RECORD, "data/ComplexRecord.csv");
+            _externalFilesLoader.addFileToLoad(MISSING_RECORDS, "data/MissingRecords.csv");
             Async.proceedOnEvent(ZeoCSVParserTest, _externalFilesLoader, Event.COMPLETE);
         }
 
@@ -90,6 +93,17 @@ package com.neophi.zeo.parser
             assertOneRecord(_zeoCSVParser.result[0]);
         }
 
+        [Test]
+        public function parseFile_MissingRecordsSync_ParsesFine():void
+        {
+            assertNull(_zeoCSVParser.result);
+            _zeoCSVParser.addEventListener(ErrorEvent.ERROR, captureErrorEvent);
+            _zeoCSVParser.parse(createCSVParser(_externalFilesLoader.getFile(MISSING_RECORDS) as String), -1);
+            failIfError();
+            assertNotNull(_zeoCSVParser.result);
+            assertEquals(35, _zeoCSVParser.result.length);
+        }
+        
         [Test]
         public function parseFile_ComplexRecordSync_ParsesFine():void
         {

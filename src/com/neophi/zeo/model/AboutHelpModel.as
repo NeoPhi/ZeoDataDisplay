@@ -32,7 +32,7 @@ package com.neophi.zeo.model
 
     public class AboutHelpModel
     {
-        public static const VERSION:String = "Revision: Nov 7, 2011 (01)";
+        public static const VERSION:String = "Revision: Jan 2, 2012 (01)";
 
         public function addContextMenuItems(target:UIComponent):void
         {
